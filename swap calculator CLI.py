@@ -1,19 +1,30 @@
 import MetaTrader5 as mt5
 import time
 
-denoDict = {'GBPAUD': 'AUDUSD', 'EURAUD': 'AUDUSD', 'AUDNZD': 'NZDUSD', 'GBPNZD': 'NZDUSD', 'EURNZD': 'NZDUSD',
-        'EURGBP': 'GBPUSD', 'GBPCHF': 'USDCHF', 'EURCHF': 'USDCHF', 'AUDCHF': 'USDCHF', 'CADCHF': 'USDCHF',
-        'NZDCHF': 'USDCHF', 'GBPJPY': 'USDJPY', 'CHFJPY': 'USDJPY', 'EURJPY': 'USDJPY', 'AUDJPY': 'USDJPY',
-        'CADJPY': 'USDJPY', 'NZDJPY': 'USDJPY', 'SGDJPY': 'USDJPY', 'NOKJPY': 'USDJPY', 'SEKJPY': 'USDJPY',
-        'GBPCAD': 'USDCAD', 'EURCAD': 'USDCAD', 'AUDCAD': 'USDCAD', 'NZDCAD': 'USDCAD', 'GBPSGD': 'USDSGD',
-        'CHFSGD': 'USDSGD', 'EURSGD': 'USDSGD', 'AUDSGD': 'USDSGD', 'GBPNOK': 'USDNOK', 'EURNOK': 'USDNOK',
-        'GBPSEK': 'GBPSEK', 'EURSEK': 'GBPSEK', 'NOKSEK': 'GBPSEK', 'GBPTRY': 'USDTRY', 'EURTRY': 'USDTRY',
-        'EURZAR': 'USDZAR', 'GBPDKK': 'USDDKK', 'EURDKK': 'USDDKK', 'EURHKD': 'USDHKD', 'EURPLN': 'USDPLN',
-        'XAUEUR': 'EURUSD', 'XAUAUD': 'AUDUSD', 'XAGEUR': 'EURUSD', 'AUS200': 'AUDUSD', 'UK100': 'GBPUSD',
-        'JP225': 'USDJPY', 'DE30': 'EURUSD', 'STOXX50': 'EURUSD', 'F40': 'EURUSD', 'ES35': 'EURUSD',
-        'IT50': 'EURUSD', 'HK50': 'USDHKD'} 
-
 mt5.initialize()
+
+def pair_generator(symbol):
+    """Takes the asset name and gives the USD converting forex pair
+        ie. for JP225 it will return USDJPY"""
+
+    if symbol in ['EUR', 'GBP', 'AUD', 'NZD']:
+        return f'{symbol}USD'
+    else:
+        return f'USD{symbol}'
+
+allinfo = mt5.symbols_get()
+
+templist = list()
+for info in allinfo:
+    if info.currency_profit == 'USD' or info.currency_margin == 'USD':
+        continue
+    else:
+        templist.append((info.name, info.currency_profit))
+
+denoDict = dict()
+for i in templist:
+    denoDict[i[0]] = pair_generator(i[1])
+
 
 def fxAdjust(exposure, pair):
     """Adjusts non-USD exposure into USD"""
@@ -26,6 +37,7 @@ def fxAdjust(exposure, pair):
         adjustedExpo = exposure * mt5.symbol_info_tick(pair).ask
 
     return adjustedExpo
+
 
 def swap(symbol):
     """Returns the rollover costs in USD"""
@@ -51,6 +63,7 @@ def swap(symbol):
             return (dollar_swapLday, dollar_swapSday)
         else:                                               #If the asset is quoted in USD
             return (swapLday, swapSday)
+
 
 print("Enter x to Quit...")
 while True:
