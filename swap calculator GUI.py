@@ -5,7 +5,7 @@ import time
 #___Initialize MT5___#
 mt5.initialize()
 
-#_________Swap calculating functions__________#
+#________Creating denomination dictionary_________#
 def pair_generator(symbol):
     """Takes the asset name and gives the USD converting forex pair
         ie. for GBPAUD it will return AUDUSD"""
@@ -28,7 +28,7 @@ denoDict = dict()
 for i in templist:
     denoDict[i[0]] = pair_generator(i[1])
 
-
+#_________Swap calculating functions__________#
 def fxAdjust(exposure, pair):
     """Adjusts non-USD exposure into USD"""
 

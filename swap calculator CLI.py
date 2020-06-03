@@ -3,6 +3,7 @@ import time
 
 mt5.initialize()
 
+#________Creating denomination dictionary_________#
 def pair_generator(symbol):
     """Takes the asset name and gives the USD converting forex pair
         ie. for JP225 it will return USDJPY"""
@@ -25,7 +26,7 @@ denoDict = dict()
 for i in templist:
     denoDict[i[0]] = pair_generator(i[1])
 
-
+#______________Swap calculating functions______________#
 def fxAdjust(exposure, pair):
     """Adjusts non-USD exposure into USD"""
 
