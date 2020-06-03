@@ -69,13 +69,17 @@ def swap(symbol, volume, exposure):
 
 
 def test():
+    """ Executes the swap calculation function,
+        on the press of button and makes the
+        required changes to the GUI variables."""
+
     selection = assetList.curselection()[0]
     symbol = assetList.get(selection)
     mt5.symbol_select(symbol)
     volume = float(volEntryVar.get())
     try:
         entryPrice = float(priceEntryVar.get())
-    except ValueError:
+    except ValueError:  # if entry price is not entered.
         entryPrice = float(mt5.symbol_info_tick(symbol).ask)
     
     exposure = volume * entryPrice
@@ -108,7 +112,7 @@ sShortVar = tk.IntVar()
 
 #_____________________Creating Widgets_________________________#
 assetLabel = tk.Label(mainWindow, text='Assets')
-assetList = tk.Listbox(mainWindow, width=30, height=28, listvariable=listBoxVar)
+assetList = tk.Listbox(mainWindow, listvariable=listBoxVar)
 scroll = tk.Scrollbar(mainWindow, orient=tk.VERTICAL, command=assetList.yview)
 assetList['yscrollcommand'] = scroll.set
 volLabel = tk.Label(mainWindow, text='Volume: ')
@@ -119,7 +123,11 @@ SSwaplabel = tk.Label(mainWindow, text='Swap Short: ')
 SSwapValue = tk.Label(mainWindow, textvariable=sShortVar)
 volEntry = tk.Entry(mainWindow, textvariable=volEntryVar)
 priceEntry = tk.Entry(mainWindow, textvariable=priceEntryVar)
-button = tk.Button(mainWindow, text='Calculate', activebackground='red', activeforeground='white', cursor='pirate',command=test)
+button = tk.Button(mainWindow, text='Calculate', command=test)
+
+#_______________Configuring Widgets____________________#
+assetList.config(width=30, height=28)
+button.config(activebackground='red', activeforeground='white', cursor='pirate')
 
 #_____________________________Placing Widgets__________________________#
 assetLabel.grid(row=0, column=0, sticky='w', padx=8)
