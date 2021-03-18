@@ -8,7 +8,7 @@ mt5.initialize()
 #________Creating denomination dictionary_________#
 def pair_generator(symbol):
     """Takes the asset name and gives the USD converting forex pair
-        ie. for GBPAUD it will return AUDUSD"""
+        ie. for AUD it will return AUDUSD"""
 
     if symbol in ['EUR', 'GBP', 'AUD', 'NZD']:
         return f'{symbol}USD'
