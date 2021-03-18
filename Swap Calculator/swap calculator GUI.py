@@ -95,7 +95,7 @@ asset_names = [info.name for info in mt5.symbols_get()]
 #___Initialize Window____#
 mainWindow = tk.Tk()
 mainWindow.geometry('440x480')
-mainWindow.title('Carry Calculator')
+mainWindow.title('Swap Calculator v1.0.0')
 
 #___________variables___________#
 # listbox variables
