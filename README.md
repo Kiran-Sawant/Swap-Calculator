@@ -17,7 +17,7 @@ It will show you the amount of USD you will pay or receive per day for a long an
 An asset should be selected (indicated by blue strip) in order for it to work.
 MT5 terminal should have an active connection with the brokers server.
 
-## Future updates (not guarenteed)
+## Future updates (not guaranteed)
 Segrigation of assets according to asset class.
 Calculation in multiple currencies.
 
