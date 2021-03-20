@@ -18,7 +18,7 @@ It will show you the amount of USD you will pay or receive per day for a long an
  - MT5 terminal should have an active connection with the brokers server.
 
 ## Future updates (not guaranteed)
- - Segrigation of assets according to asset class.
+ - Segrigation of securities according to asset class.
  - Calculation in multiple currencies.
 
 ## For Developers:
